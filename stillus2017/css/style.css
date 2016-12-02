@@ -630,6 +630,7 @@ footer .social a i{
     position: relative;
     z-index: 1;
     text-align: center;
+    min-height: 430px;
 }
 .about .teams .pict {
     position: relative;

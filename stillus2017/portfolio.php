@@ -33,7 +33,7 @@
                         <div class="row portfolioContainer  text-center">
                             <?php foreach($port_grid as $port_grid_item){?>                                
                                 <div class="col-md-4 col-xs-6 portfolio-item <?php echo $port_grid_item['campanha']; ?>">
-                                    <a class="popup" href="uploads/<?php echo $port_grid_item['foto']; ?>" data-lightbox-gallery="team-portfolio">
+                                    <a href="portfolio-item.php">
                                         <span class="project-hover">
                                             <span><strong><?php echo $port_grid_item['campanha']; ?></strong><br />
                                             <small><?php echo $port_grid_item['cliente']; ?></small>
