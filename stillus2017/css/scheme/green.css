@@ -1,0 +1,32 @@
+a{color:#bed62f;}
+#menu .navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus{color:#bed62f;}
+.footer-toogle .hover i{color:#bed62f;}
+.totop:hover span>a.hover{color:#bed62f;}
+.social-icon li:hover a{background:#bed62f;}
+.home .slides-navigation a:hover{color:#bed62f;}
+.services .services-icon{background:#bed62f;}
+.testimonial .icon-testimonial{color:#bed62f;}
+.call-ta h2{border-left:3px solid #bed62f;}
+.contact form input,.contact form textarea{border-left:1px solid #bed62f;}
+.contact form input:focus,.contact form textarea:focus{border:1px solid #bed62f;}
+#primary .pagination li:hover a{background:#bed62f;}
+#primary .pagination li.active a{background:#bed62f;}
+.post .post-meta span a:hover{color:#bed62f;}
+.blog-comments form input,.blog-comments form textarea{border-left:1px solid #bed62f;}
+.blog-comments form input:focus,.blog-comments form textarea:focus{border:1px solid #bed62f;}
+.widgetbar .widget ul li a:hover{color:#bed62f;}
+.widget .widget-title a:hover{color:#bed62f;}
+form .form-control,form textarea{border-left:1px solid #bed62f;}
+form .form-control:focus,form textarea:focus{border:1px solid #bed62f;}
+.btn-link:hover{color:#bed62f;}
+.pagination li:hover a{background:#bed62f;color:#FFF;}
+.pagination li.active a{background:#bed62f;}
+.service .icon-holder{color: #bed62f;}
+.portfolioFilter li.active{background: #bed62f;border: 1px solid #bed62f;}
+.service:hover {border-color: #bed62f;}
+.client-photo.active{border: 1px solid #bed62f;}
+.to-top-btn:hover{color: #bed62f;}
+.sidebar .widget ul li a:hover {color: #bed62f;}
+.btn:hover{color: #bed62f;border-color: #bed62f;}
