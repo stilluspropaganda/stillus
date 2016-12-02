@@ -1,0 +1,12 @@
+Options +FollowSymlinks
+Options -Indexes
+<FilesMatch "\.(tpl|ini|log)">
+ Order deny,allow
+ Deny from all
+</FilesMatch>
+
+RewriteEngine on
+RewriteRule ^([^/\.]+)/?$ index.php?url1=$1 [L]
+RewriteRule ^([^/\.]+)/([^/\.]+)/?$ index.php?url1=$1&url2=$2 [L]
+RewriteRule ^([^/\.]+)/([^/\.]+)/([^/\.]+)/?$ index.php?url1=$1&url2=$2&url3=$3 [L]
+RewriteRule ^([^/\.]+)/([^/\.]+)/([^/\.]+)/([^/\.]+)/?$ index.php?url1=$1&url2=$2&url3=$3&url4=$4 [L]
