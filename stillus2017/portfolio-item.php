@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <?php include("inc/head.php");?>
+<?php $id_campanha = (int)$_GET['campanha'];
+
+$campanhas = $sis->select("campanha",NULL,NULL,"id='$id_campanha'");
+$campanha = $campanhas[0];
+
+
+
+?>
+
 <body data-spy="scroll">
     <!-- Preloader -->
     <div id="preloader">
@@ -20,7 +29,7 @@
                                 <!-- BEGIN ARTICLE -->
                                 <article class="post">
                                     <div class="post-thumb">
-                                        <img class="thumbnail" src="images/post-1.jpg" alt="Blog Post 1" />
+                                        <img class="thumbnail" src="uploads/<?php echo $campanha['foto'] ?>" alt="Blog Post 1" />
                                     </div>
                                 </article>
                                 <!-- END ARTICLE -->
@@ -37,13 +46,13 @@
                                         Informações:
                                     </h3>
                                         <li>
-                                            <strong>Cliente: </strong> Transsen
+                                            <strong>Cliente: </strong> <?php echo $campanha['cliente'] ?>
                                         </li>
                                         <li>
-                                            <strong>Nome: </strong> Campanha tal
+                                            <strong>Nome: </strong> <?php echo $campanha['campanha'] ?>
                                         </li>
                                         <li>
-                                            <strong>Data: </strong> 11/11/2016
+                                            <strong>Data: </strong> <?php echo $sis->data($campanha['data'],"d/m/Y") ?>
                                         </li>
                                 </div>
                             </div>
@@ -57,7 +66,7 @@
                                         Descrição
                                     </h3>
                                     <p>
-                                        Foi mó loco, teve um monte de coisa pra fazer.
+                                        <?php echo $campanha['descricao'] ?>
                                     </p>
                                 </div>
                             </div>
@@ -70,22 +79,12 @@
                                     <h3 class="widget-title">
                                         Fotos:
                                     </h3>
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
-                                     <img class="col-md-3 thumbnail img-responsive" src="images/post-1.jpg">
+									<?php $campanhas_imagens = $sis->select("campanha_imagens",NULL,NULL,"campanha='$id_campanha'");
+									if(!empty($campanhas_imagens)){
+										foreach($campanhas_imagens as $imagens){?>
+											 <img class="col-md-3 thumbnail img-responsive" src="uploads/<?php echo $imagens['imagem']?>">
+										 <?php }?>
+									 <?php }?>
                                 </div>
                             </div>
                         </div>

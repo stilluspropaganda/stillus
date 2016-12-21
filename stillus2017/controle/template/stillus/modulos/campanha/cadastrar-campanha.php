@@ -29,6 +29,33 @@ $tipo_peca = $sis->select("pecas",NULL,NULL,NULL,"titulo ASC");
 		";
 		$add = $sis->insert("campanha",$campos);
 		if($add > 0){
+			
+			if(!empty($_FILES['imagens']['tmp_name'][0])){
+				$arquivos = $_FILES['imagens']['tmp_name'];
+				$arquivos_nomes = $_FILES['imagens']['name'];
+				$cImg = count($arquivos);
+				for($i=0;$i<$cImg;$i++){
+					$arquivo = $arquivos[$i];
+					$arquivo_nome = $arquivos_nomes[$i];
+					$nome_imagem = "portfolio_".date('YmdHis')."_".$sis->slug($arquivo_nome);
+					if($i=='0'){
+						$img_destaque = $nome_imagem;
+					}
+					$upload = move_uploaded_file($arquivo,p_UPLOADS.$nome_imagem);
+					if($upload){
+						$campos = "
+							campanha='$add',
+							imagem='$nome_imagem',
+							legenda='$campanha'
+						";
+						$add_img = $sis->insert("campanha_imagens",$campos);
+					}else{
+						$erro = "Erro ao enviar a imagem $arquivo_nome.";
+					}
+				}
+			}
+			
+			
 			$_POST = NULL;
 			
 			$ok = "Cadastro concluído com sucesso.";
@@ -108,7 +135,18 @@ $tipo_peca = $sis->select("pecas",NULL,NULL,NULL,"titulo ASC");
 									<div class="controls">
 										<label class="text-info">500x333pixels</label><input type="file" name="foto" class="span6 m-wrap" data-rule-required="true"  data-msg-required="Campo obrigatório." />
 									</div>
-								</div>						
+								</div>	
+								
+								<hr />
+								
+								<div class="control-group">
+									<label class="control-label">Mais imagens:</label>
+									<div class="controls">
+										<label class="text-info"></label><input type="file" name="imagens[]" multiple="multiple" class="span6 m-wrap" />
+									</div>
+								</div>
+								
+													
 								
 								<div class="form-actions span12">
 									<button type="submit" name="acao" value="cadastrar" class="btn blue pull-right">Salvar</button>

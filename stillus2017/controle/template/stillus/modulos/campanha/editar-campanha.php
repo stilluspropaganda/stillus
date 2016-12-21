@@ -12,6 +12,20 @@
 $clientes_lista = $sis->select("clientes",NULL,NULL,NULL,"nome ASC");
 $tipo_peca = $sis->select("pecas",NULL,NULL,NULL,"titulo ASC");
  if(isset($_POST['acao']) && $_POST['acao']=='cadastrar'){
+	 
+	if(isset($_POST['img_excluir'])){
+		$excluir = $_POST['img_excluir'];
+		$cExc = count($excluir);
+		for($i=0;$i<$cExc;$i++){
+			$id_img = $excluir[$i];
+			$img = $sis->select("campanha_imagens",NULL,NULL,"id='$id_img'");
+			if(is_file(p_UPLOADS.$img[0]['imagem'])){
+				unlink(p_UPLOADS.$img[0]['imagem']);
+				$del = $sis->delete("campanha_imagens","id",$id_img);
+			}
+		}
+	}
+	 
 	$cliente = addslashes($_POST['cliente']);
 	$campanha = addslashes($_POST['campanha']);
 	$descricao = addslashes($_POST['descricao']);
@@ -35,7 +49,31 @@ $tipo_peca = $sis->select("pecas",NULL,NULL,NULL,"titulo ASC");
 		}
 	}
 	
+	if(!empty($_FILES['imagens']['tmp_name'][0])){
+		$arquivos = $_FILES['imagens']['tmp_name'];
+		$arquivos_nome = $_FILES['imagens']['name'];
+		$cImg = count($arquivos);
+		for($i=0;$i<$cImg;$i++){
+			$arquivo = $arquivos[$i];
+			$arquivo_nome = $arquivos_nome[$i];
+			$nome_imagem = "portfolio_".date('YmdHis')."_".$sis->slug($arquivo_nome);
+			$upload = move_uploaded_file($arquivo,p_UPLOADS.$nome_imagem);
+			if($upload){
+				$campos = "
+					campanha='$id',
+					imagem='$nome_imagem',
+					legenda=''
+				";
+				$add_img = $sis->insert("campanha_imagens",$campos);
+			}else{
+				$erro = "Erro ao enviar a imagem $arquivo_nome.";
+			}
+		}		
+	}
+	
 	$update = $sis->update("campanha",$campos,"id",$id);
+	
+	
 	if($update){
 		$_POST = NULL;
 		
@@ -128,12 +166,36 @@ if(is_array($itens) && count($itens)>0){
 									<div class="controls">
 
 									<label class="text-info">500x333pixels</label>
-                                                <img src="<?php echo u_UPLOADS.'/'.$item['foto'];?>" style="max-width:50%;">
+                                                <img src="<?php echo u_UPLOADS.$item['foto'];?>" style="max-width:50%;">
 											<br />
 										<input type="hidden" name="foto_atual" value="<?php echo $item['foto']?>" />
 										Trocar Foto: <input type="file" name="foto" class="span6 m-wrap" />
 									</div>
-								</div>							
+								</div>	
+								
+								
+			
+								<div class="form-group">
+									<label for="imagens" class="col-sm-2 control-label">Mais imagens:</label>
+									<div class="col-sm-9">
+										<input name="imagens[]" multiple type="file" class="form-control" id="imagens">
+									</div>
+								</div>
+								
+								
+								
+								<?php $images = $sis->select("campanha_imagens",NULL,NULL,"campanha='".$item['id']."'");
+								if(!empty($images)){?>
+									<div class="row">
+										<?php foreach($images as $imagem){?>
+											<div class="col-sm-2" style="float:left;">
+												<img src="<?php echo $sis->url_base()?>timthumb.php?src=<?php echo u_UPLOADS.$imagem['imagem'];?>&amp;w=150&amp;h=150" alt="" class="img-responsive" /><label><input type="checkbox" name="img_excluir[]" value="<?php echo $imagem['id']?>" /> Excluir</label>
+											</div>
+										<?php }?>
+									</div>
+								<?php }?>
+								
+														
 								
 								<div class="form-actions">
 									<button type="submit" name="acao" value="cadastrar" class="btn blue">Salvar</button>
